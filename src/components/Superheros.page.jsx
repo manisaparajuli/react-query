@@ -9,7 +9,6 @@ export const SuperherosPage = () => {
     axios.get('http://localhost:4000/superheroes')
     .then(res => {
       setData(res.data)
-      
       setLoading(false)
     })
   }, [])
@@ -22,7 +21,6 @@ export const SuperherosPage = () => {
     <div>{
       data.map((hero) => {
         return <div key={hero.id}>{hero.name}</div>
-        
       })  
     }</div>
   )
