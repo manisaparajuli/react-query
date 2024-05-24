@@ -6,10 +6,13 @@ const dataFetching = () => {
 }
 
 export const RQSuperHerosPage = () => {
-  const{pending, data} = useQuery('super-hero', dataFetching)
+  const{pending, data, isError, error} = useQuery('super-hero', dataFetching)
 
   if(pending){
-    <h2>Loading....</h2>
+    return <h2>Loading....</h2>
+  }
+  if (isError){
+    return <h2>{error.message}</h2>
   }
   return (
     <div>
