@@ -6,7 +6,7 @@ const dataFetching = () => {
 }
 
 export const RQSuperHerosPage = () => {
-  const{pending, data, isError, error} = useQuery('super-hero', dataFetching)
+  const{pending, data, isError, error, isFetching} = useQuery('super-hero', dataFetching, {cacheTime: 1000,})
 
   if(pending){
     return <h2>Loading....</h2>
