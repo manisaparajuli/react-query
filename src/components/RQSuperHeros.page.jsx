@@ -1,4 +1,5 @@
 import axios from "axios"
+import { useState } from "react"
 import { useQuery } from "react-query"
 
 const dataFetching = () => {
@@ -6,13 +7,29 @@ const dataFetching = () => {
 }
 
 export const RQSuperHerosPage = () => {
+  const [refetchTime, setRefetchTime] = useState(3000)
+  const onSuccess = (data) => {
+    if(data?.data.length === 4){
+      setRefetchTime(false)
+      console.log("Perform side effect after data fetching", data)
+    }
+  }
+  const onError = (error) => {
+    if(error){
+      setRefetchTime(false)
+    }
+    console.log("Perform side effect after occurance of an error", error)
+  }
   const{isLoading, data, isError, error, isFetching, refetch} = useQuery('super-hero', dataFetching, 
   {
     // cacheTime: 5000,
-    refetchInterval: 2000,
+    refetchInterval: refetchTime,
+    // enabled: false,
+    onSuccess,
+    onError
   })
 
-  if(isLoading){
+  if(isLoading || isFetching){
     return <h2>Loading....</h2>
   }
   if (isError){
